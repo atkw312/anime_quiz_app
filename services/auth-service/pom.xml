@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.tkwang312</groupId>
-	<artifactId>aniguesser</artifactId>
+	<artifactId>auth-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>aniguesser</name>
+	<name>auth-service</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -45,6 +45,12 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 			<version>4.0.1</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-actuator</artifactId>-->
+<!--			<version>4.0.1</version>-->
+<!--		</dependency>-->
+
 	</dependencies>
 
 	<build>
