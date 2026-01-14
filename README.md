@@ -31,3 +31,37 @@
 - `MATCH_COMPLETED` event is published to Kafka
 - Lobby leaderboard is generated and displayed
 - Player statistics and leaderboards are updated asynchronously
+
+
+## Agile Development Process
+
+This project is developed using a Scrum-style Agile methodology adapted for a single developer.
+
+### Sprint Structure
+- Sprint length: 1 week
+- Each sprint has a defined goal
+- Each sprint delivers a working, deployable increment
+
+### Work Tracking
+- All work is tracked using GitHub Issues
+- Issues are categorized as user stories or technical tasks
+- A GitHub Project board is used to track progress
+
+### Sprint Rituals
+- Sprint Planning: Select issues aligned with sprint goal
+- Daily Check-in: Brief progress notes recorded in issue comments
+- Sprint Review: Demo working features locally
+- Sprint Retrospective: Document improvements for next sprint
+
+### Definition of Done
+A task is considered complete when:
+- Code is implemented
+- Tests pass
+- API behavior is verified
+- Changes are merged via pull request
+- Service runs locally via Docker
+
+### Sprint 1 Goal
+Establish secure user authentication using JWT-based stateless authentication.
+
+This Agile process ensures incremental delivery, continuous feedback, and production-ready code quality.
