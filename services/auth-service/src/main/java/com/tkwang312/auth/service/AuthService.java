@@ -1,0 +1,38 @@
+package com.tkwang312.auth.service;
+
+import com.tkwang312.auth.dataTransferObject.RegisterRequest;
+import com.tkwang312.auth.model.User;
+import com.tkwang312.auth.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class AuthService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthService(UserRepository userRepository,
+                            PasswordEncoder passwordEncoder){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    public void register(RegisterRequest registerRequest){
+        if (userRepository.existsByUsername(registerRequest.getUsername())) {
+//            throw new DuplicateUserException();
+        }
+
+        User user = new User();
+
+        user.setUsername(registerRequest.getUsername());
+
+        String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());
+        user.setPasswordHash(hashedPassword);
+
+        userRepository.save(user);
+    }
+
+}
