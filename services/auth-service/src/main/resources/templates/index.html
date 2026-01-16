@@ -10,8 +10,13 @@
         <form method="post" th:action="@{/auth/register}">
             <input type="text" name="username" placeholder="Username" />
             <input type="password" name="password" placeholder="Password" />
-            <button type="submit">Login</button>
+            <button type="submit">Signup</button>
         </form>
+        <p>
+            Have an account?
+            <a th:href="@{/auth/login}">Login</a>
+        </p>
+
     </div>
 </body>
 </html>
