@@ -31,4 +31,7 @@ public class User {
         return this.passwordHash;
     }
 
+    public Long getId() {
+        return this.id;
+    }
 }
