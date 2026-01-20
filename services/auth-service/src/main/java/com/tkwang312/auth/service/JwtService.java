@@ -1,11 +1,14 @@
 package com.tkwang312.auth.service;
 
+import com.tkwang312.auth.config.JwtProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -18,6 +21,11 @@ public class JwtService {
     private static final long EXPIRATION_MS = 1000 * 60 * 60 * 24; // 1 day
     private final Key key;
 
+    public JwtService(JwtProperties props) {
+        this.key = Keys.hmacShaKeyFor(
+                props.getSecret().getBytes(StandardCharsets.UTF_8)
+        );
+    }
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);
     }
