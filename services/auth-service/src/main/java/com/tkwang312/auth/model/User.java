@@ -1,6 +1,10 @@
 package com.tkwang312.auth.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,7 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="users")
 public class User implements UserDetails{
@@ -19,38 +26,17 @@ public class User implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
-    private String passwordHash;
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
-    public void setUsername(String usr){
-        this.username = usr;
-    }
-    public void setPasswordHash(String pwd){
-        this.passwordHash = pwd;
-    }
-    public void setEmail(String email){this.email = email;}
-
-    @Override
-    public String getUsername(){ return this.username; }
-    public String getPasswordHash(){
-        return this.passwordHash;
-    }
-    public String getEmail(){return this.email;}
-
-    public Long getId() {
-        return this.id;
-    }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -59,7 +45,7 @@ public class User implements UserDetails{
 
     @Override
     public @Nullable String getPassword() {
-        return "";
+        return this.password;
     }
 
     @Override
