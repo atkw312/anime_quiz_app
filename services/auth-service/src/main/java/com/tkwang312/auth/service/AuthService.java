@@ -1,56 +1,61 @@
 package com.tkwang312.auth.service;
 
+import com.tkwang312.auth.dataTransferObject.AuthenticationResponse;
 import com.tkwang312.auth.dataTransferObject.LoginRequest;
 import com.tkwang312.auth.dataTransferObject.RegisterRequest;
+import com.tkwang312.auth.model.Role;
 import com.tkwang312.auth.model.User;
 import com.tkwang312.auth.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.core.support.RepositoryMethodInvocationListener;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthService(UserRepository userRepository,
-                            PasswordEncoder passwordEncoder, JwtService jwt){
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwt;
-    }
-
-    public void register(RegisterRequest registerRequest){
-        if (userRepository.existsByUsername(registerRequest.getUsername())) {
-//            throw new DuplicateUserException();
-        }
-
-        User user = new User();
-
-        user.setUsername(registerRequest.getUsername());
-
-        String hashedPassword = passwordEncoder.encode(registerRequest.getPassword());
-        user.setPasswordHash(hashedPassword);
-
+    // create user, save to database, return token
+    public AuthenticationResponse register(RegisterRequest request){
+        var user = User.builder()
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .email(request.getEmail())
+                .role(Role.USER)
+                .build();
         userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        System.out.println("JWT AFTER SUBSTRING: " + jwtToken);
+        System.out.println("JWT LENGTH: " + jwtToken.length());
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
 
-    public String login(LoginRequest request) {
+    public AuthenticationResponse login(LoginRequest request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                request.getUsername(),
+                request.getPassword()
+        ));
+        var user = userRepository.findByUsername(request.getUsername())
+                .orElseThrow();
 
-        if (!userRepository.existsByUsername(request.getUsername())) {
-            throw new IllegalStateException("Username does not exist");
-        }
+        var jwtToken = jwtService.generateToken(user);
+        System.out.println("JWT AFTER SUBSTRING: [" + jwtToken + "]");
+        System.out.println("JWT LENGTH: " + jwtToken.length());
 
-        User user = userRepository.findByUsername(request.getUsername());
-
-        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new IllegalStateException("Invalid credentials");
-        }
-
-        return jwtService.generateToken(user.getId());
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .build();
     }
 
 
