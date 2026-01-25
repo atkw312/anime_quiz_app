@@ -19,6 +19,10 @@ jobs:
           distribution: temurin
           java-version: 21
 
+      - name: Make mvnw executable
+        working-directory: services/auth-service
+        run: chmod +x mvnw
+
       - name: Build auth-service
         working-directory: services/auth-service
         run: ./mvnw clean package -DskipTests
