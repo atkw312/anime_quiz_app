@@ -15,7 +15,7 @@
 - `MATCH_STARTED` event is published to Kafka
 
 ### 3. Guess Submission
-- Player submits a guess for the anime title
+- Player submits a guess
 - Game Engine validates the guess
 - Submission timestamp is recorded
 - `GUESS_SUBMITTED` event is published to Kafka
@@ -32,7 +32,24 @@
 - Lobby leaderboard is generated and displayed
 - Player statistics and leaderboards are updated asynchronously
 
-### Sprint 1 Goal
-Establish secure user authentication using JWT-based stateless authentication.
+## Technologies Used
 
-This Agile process ensures incremental delivery, continuous feedback, and production-ready code quality.
+## Technologies Used
+
+### Backend
+- **Java, Spring Boot** — Core backend framework for REST APIs, service orchestration, and game logic
+- **Spring Web (REST)** — Lobby creation, match lifecycle, and guess submission endpoints
+- **Spring Data JPA / Hibernate** — ORM layer for persisting users, lobbies, matches, and statistics
+
+### Datastores
+- **PostgreSQL** — Persistent storage for user accounts, lobby metadata, match history, and leaderboards
+- **Redis** — In-memory cache for active lobby state, atomic ordering, and race-condition-safe placement logic
+
+### DevOps & Infrastructure
+- **Docker** — Containerization of backend services and databases
+- **Docker Compose** — Local orchestration of services (auth, lobby, game engine, PostgreSQL, Redis, Kafka)
+- **Kubernetes** — Service orchestration, replica scaling, and deployment readiness
+
+### Build & CI/CD
+- **Maven** — Dependency management and reproducible Java builds
+- **GitHub Actions** — Automated builds, tests, and CI workflows on pull requests
