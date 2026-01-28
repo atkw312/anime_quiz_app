@@ -1,6 +1,6 @@
 package com.tkwang312.gameengine.config;
 
-import com.tkwang312.gameengine.game.model.GameState;
+import com.tkwang312.gameengine.model.GameState;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;

@@ -1,6 +1,6 @@
-package com.tkwang312.gameengine.game.redis;
+package com.tkwang312.gameengine.repository;
 
-import com.tkwang312.gameengine.game.model.GameState;
+import com.tkwang312.gameengine.model.GameState;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;

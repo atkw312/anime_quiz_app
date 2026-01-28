@@ -1,4 +1,4 @@
-package com.tkwang312.gameengine.game.model;
+package com.tkwang312.gameengine.model;
 
 import lombok.*;
 import jakarta.validation.constraints.NotNull;
